@@ -31,14 +31,14 @@ print(key)
 conn.sendall(key)
 
 while True:
-    data = f.decrypt(data).decode('utf-8')
+    data = f.decrypt(conn.recv(1024)).decode('utf-8')
     if not data: 
     	break
 
     print("B: "+ data)
 
-    if f.decrypt(data).decode('utf-8') == "bye":
-    	break
+    # if f.decrypt(data).decode('utf-8') == "bye":
+    # 	break
 
     s_msg = input("A: ")
     token = f.encrypt(s_msg.encode('utf-8'))

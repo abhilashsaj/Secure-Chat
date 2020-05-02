@@ -25,8 +25,8 @@ while(True):
 	data = s.recv(1024)
 	print("A:", f.decrypt(data).decode('utf-8'))
 
-	if f.decrypt(data).decode('utf-8') == "bye":
-	    break
+	# if f.decrypt(data).decode('utf-8') == "bye":
+	#     break
 
 
 
