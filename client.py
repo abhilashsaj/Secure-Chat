@@ -1,11 +1,34 @@
-import socket
+import time, socket, sys
 
-HOST = '127.0.0.1'  # The server's hostname or IP address
-PORT = 65432        # The port used by the server
+print("\nWelcome to Chat Room\n")
+print("Initialising....\n")
+time.sleep(1)
 
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.connect((HOST, PORT))
-    s.sendall(b'Hello, world')
-    data = s.recv(1024)
+s = socket.socket()
+shost = socket.gethostname()
+ip = socket.gethostbyname(shost)
+print(shost, "(", ip, ")\n")
+host = input(str("Enter server address: "))
+name = input(str("\nEnter your name: "))
+port = 1234
+print("\nTrying to connect to ", host, "(", port, ")\n")
+time.sleep(1)
+s.connect((host, port))
+print("Connected...\n")
 
-print('Received', repr(data))
+s.send(name.encode())
+s_name = s.recv(1024)
+s_name = s_name.decode()
+print(s_name, "has joined the chat room\nEnter [e] to exit chat room\n")
+
+while True:
+    message = s.recv(1024)
+    message = message.decode()
+    print(s_name, ":", message)
+    message = input(str("Me : "))
+    if message == "[e]":
+        message = "Left chat room!"
+        s.send(message.encode())
+        print("\n")
+        break
+    s.send(message.encode())
