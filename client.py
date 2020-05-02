@@ -19,12 +19,13 @@ print(key)
 
 while(True):
 	c_msg = input("B: ")
-	s.sendall(c_msg.encode('utf-8'))
+	token = f.encrypt(c_msg.encode('utf-8'))
+	s.sendall(token)
 
 	data = s.recv(1024)
-	print("A: ", f.decrypt(data).decode('utf-8'))
+	print("A:", f.decrypt(data).decode('utf-8'))
 
-	if data.decode('utf-8') == "bye":
+	if f.decrypt(data).decode('utf-8') == "bye":
 	    break
 
 
