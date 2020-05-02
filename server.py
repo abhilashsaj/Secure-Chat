@@ -7,8 +7,8 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 
-host = ''        # Symbolic name meaning all available interfaces
-port = 12345     # Arbitrary non-privileged port
+host = ''        
+port = 12345     
 print("Client A started...")
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((host, port))
@@ -39,12 +39,10 @@ while True:
 
     if f.decrypt(data).decode('utf-8') == "bye":
     	break
-    	
+
     s_msg = input("A: ")
     token = f.encrypt(s_msg.encode('utf-8'))
     conn.sendall(token)
-    # if data == 'bye': 
-    # 	break
 
 	
 conn.close()

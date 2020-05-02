@@ -9,7 +9,7 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 print("Client B started...")
 host = socket.gethostname()    
-port = 12345                   # The same port as used by the server
+port = 12345                   
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((host, port))
 
