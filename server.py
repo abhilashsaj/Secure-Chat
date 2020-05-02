@@ -27,7 +27,7 @@ kdf = PBKDF2HMAC(
 )
 key = base64.urlsafe_b64encode(kdf.derive(password))
 f = Fernet(key)
-
+print(key)
 conn.sendall(key)
 
 while True:
@@ -40,7 +40,8 @@ while True:
     if data.decode('utf-8') == "bye":
     	break
     s_msg = input("A: ")
-    conn.sendall(s_msg.encode('utf-8'))
+    token = f.encrypt(s_msg.encode('utf-8'))
+    conn.sendall(token)
     # if data == 'bye': 
     # 	break
 
