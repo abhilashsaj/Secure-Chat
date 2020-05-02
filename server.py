@@ -37,8 +37,8 @@ while True:
 
     print("B: "+ data)
 
-    # if f.decrypt(data).decode('utf-8') == "bye":
-    # 	break
+    if data == "bye":
+    	break
 
     s_msg = input("A: ")
     token = f.encrypt(s_msg.encode('utf-8'))

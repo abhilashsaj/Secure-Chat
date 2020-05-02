@@ -22,11 +22,12 @@ while(True):
 	token = f.encrypt(c_msg.encode('utf-8'))
 	s.sendall(token)
 
-	data = s.recv(1024)
-	print("A:", f.decrypt(data).decode('utf-8'))
+	data = f.decrypt(s.recv(1024)).decode('utf-8')
+	print("A: " + data )
 
-	# if f.decrypt(data).decode('utf-8') == "bye":
-	#     break
+	if data == "bye":
+	    break
+	    
 
 
 
