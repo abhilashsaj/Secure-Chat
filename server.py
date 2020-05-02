@@ -16,8 +16,19 @@ s.listen(1)
 conn, addr = s.accept()
 print('Connected by', addr)
 
-key = "abhilash"
-conn.sendall(key.encode('utf-8'))
+password = b"abhilash"
+salt = os.urandom(16)
+kdf = PBKDF2HMAC(
+    algorithm=hashes.SHA512(),
+    length=32,
+    salt=salt,
+    iterations=100000,
+    backend=default_backend()
+)
+key = base64.urlsafe_b64encode(kdf.derive(password))
+f = Fernet(key)
+
+conn.sendall(key)
 
 while True:
     data = conn.recv(1024)
