@@ -6,6 +6,9 @@ port = 12345                   # The same port as used by the server
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((host, port))
 
+data = s.recv(1024)
+print("Key: " + data.decode('utf-8'))
+
 while(True):
 	c_msg = input("B: ")
 	s.sendall(c_msg.encode('utf-8'))

@@ -1,4 +1,11 @@
 import socket
+import base64
+import os
+from cryptography.fernet import Fernet
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+
 
 host = ''        # Symbolic name meaning all available interfaces
 port = 12345     # Arbitrary non-privileged port
@@ -9,6 +16,8 @@ s.listen(1)
 conn, addr = s.accept()
 print('Connected by', addr)
 
+key = "abhilash"
+conn.sendall(key.encode('utf-8'))
 
 while True:
     data = conn.recv(1024)
