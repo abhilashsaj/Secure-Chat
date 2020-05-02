@@ -1,5 +1,6 @@
 import socket
 
+print("Client B started...")
 host = socket.gethostname()    
 port = 12345                   # The same port as used by the server
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
