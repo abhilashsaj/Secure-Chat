@@ -10,3 +10,11 @@ The project includes client to client secure message transmission and a secure g
   * SHA-512 for integrity
 
   * MAC for message authentication. 
+  
+## Usage
+
+### Two User
+
+ * Run client1.py located in Two User folder of repo.
+
+ * Next run client2.py.
