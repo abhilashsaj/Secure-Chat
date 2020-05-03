@@ -7,6 +7,18 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
+password = b"abhilash"
+salt = os.urandom(16)
+kdf = PBKDF2HMAC(
+    algorithm=hashes.SHA512(),
+    length=32,
+    salt=salt,
+    iterations=100000,
+    backend=default_backend()
+)
+key = base64.urlsafe_b64encode(kdf.derive(password))
+f = Fernet(key)
+print(key)
 
 HEADER_LENGTH = 10
 IP = "127.0.0.1"
@@ -35,7 +47,6 @@ def receive_message(client_socket):
         return False
 
 
-
 while True:
     read_sockets, _, exception_sockets = select.select(sockets_list, [], sockets_list)
 
@@ -52,7 +63,7 @@ while True:
 
             # Client should send his name right away, receive it
             user = receive_message(client_socket)
-
+            client_socket.sendall(key)
             # If False - client disconnected before he sent his name
             if user is False:
                 continue
