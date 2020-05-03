@@ -18,3 +18,11 @@ The project includes client to client secure message transmission and a secure g
  * Run client1.py located in Two User folder of repo.
 
  * Next run client2.py.
+
+### Group Chat
+
+ * Run server.py.
+
+ * Run client.py to create new users.
+ 
+  
