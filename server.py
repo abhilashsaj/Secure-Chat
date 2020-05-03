@@ -64,6 +64,7 @@ while True:
             # Client should send his name right away, receive it
             user = receive_message(client_socket)
             client_socket.sendall(key)
+            print("key sent")
             # If False - client disconnected before he sent his name
             if user is False:
                 continue
