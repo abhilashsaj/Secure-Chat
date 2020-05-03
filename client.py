@@ -38,7 +38,8 @@ while True:
     if message:
 
         # Encode message to bytes, prepare header and convert to bytes, like for username above, then send
-        message = message.encode('utf-8')
+        # message = message.encode('utf-8')
+        message = f.encrypt(message.encode('utf-8'))
         message_header = f"{len(message):<{HEADER_LENGTH}}".encode('utf-8')
         client_socket.send(message_header + message)
 
@@ -62,8 +63,9 @@ while True:
 
             # Now do the same for message (as we received username, we received whole message, there's no need to check if it has any length)
             message_header = client_socket.recv(HEADER_LENGTH)
+            # f.decrypt(conn.recv(1024)).decode('utf-8')
             message_length = int(message_header.decode('utf-8').strip())
-            message = client_socket.recv(message_length).decode('utf-8')
+            message = f.decrypt(client_socket.recv(message_length)).decode('utf-8')
 
             # Print message
             print(f'{username} > {message}')
