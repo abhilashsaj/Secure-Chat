@@ -22,7 +22,11 @@ client_socket.setblocking(False)
 username = my_username.encode('utf-8')
 username_header = f"{len(username):<{HEADER_LENGTH}}".encode('utf-8')
 client_socket.send(username_header + username)
-key = f.decrypt(client_socket.recv()).decode('utf-8')
+
+key = client_socket.recv()
+f = Fernet(key)
+print(key)
+
 while True:
 
     # Wait for user to input a message
