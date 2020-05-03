@@ -23,9 +23,11 @@ username = my_username.encode('utf-8')
 username_header = f"{len(username):<{HEADER_LENGTH}}".encode('utf-8')
 client_socket.send(username_header + username)
 
-key = client_socket.recv()
+client_socket.setblocking(1)
+key = client_socket.recv(100)
 f = Fernet(key)
 print(key)
+client_socket.setblocking(False)
 
 while True:
 
