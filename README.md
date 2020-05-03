@@ -1,7 +1,7 @@
 # Secure-Chat
 
 ## About
-The project includes client to client secure message transmission and a secure group chat with end to end encryption.
+The project includes client to client secure message transmission and a secure chatroom with end to end encryption.
 
 ## Features
 
@@ -19,7 +19,7 @@ The project includes client to client secure message transmission and a secure g
 
  * Next run client2.py.
 
-### Group Chat
+### Chatroom
 
  * Run server.py.
 
@@ -28,4 +28,4 @@ The project includes client to client secure message transmission and a secure g
   
 <hr/>
 
-Feel free to contribute to the project :)
+  Feel free to contribute to the project :)
