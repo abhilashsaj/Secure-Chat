@@ -1,64 +1,43 @@
 import socket
 import select
+import base64
+import os
+from cryptography.fernet import Fernet
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+
 
 HEADER_LENGTH = 10
-
 IP = "127.0.0.1"
 PORT = 1234
-
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
 server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
 server_socket.bind((IP, PORT))
-
 server_socket.listen()
 
 sockets_list = [server_socket]
-
 clients = {}
 
 print(f'Listening for connections on {IP}:{PORT}...')
 
-
 def receive_message(client_socket):
-
     try:
-
-        # Receive our "header" containing message length, it's size is defined and constant
         message_header = client_socket.recv(HEADER_LENGTH)
 
-        # If we received no data, client gracefully closed a connection, for example using socket.close() or socket.shutdown(socket.SHUT_RDWR)
         if not len(message_header):
             return False
 
-        # Convert header to int value
         message_length = int(message_header.decode('utf-8').strip())
-
-        # Return an object of message header and message data
         return {'header': message_header, 'data': client_socket.recv(message_length)}
 
     except:
-
-        # If we are here, client closed connection violently, for example by pressing ctrl+c on his script
-        # or just lost his connection
-        # socket.close() also invokes socket.shutdown(socket.SHUT_RDWR) what sends information about closing the socket (shutdown read/write)
-        # and that's also a cause when we receive an empty message
         return False
 
+
+
 while True:
-
-    # Calls Unix select() system call or Windows select() WinSock call with three parameters:
-    #   - rlist - sockets to be monitored for incoming data
-    #   - wlist - sockets for data to be send to (checks if for example buffers are not full and socket is ready to send some data)
-    #   - xlist - sockets to be monitored for exceptions (we want to monitor all sockets for errors, so we can use rlist)
-    # Returns lists:
-    #   - reading - sockets we received some data on (that way we don't have to check sockets manually)
-    #   - writing - sockets ready for data to be send thru them
-    #   - errors  - sockets with some exceptions
-    # This is a blocking call, code execution will "wait" here and "get" notified in case any action should be taken
     read_sockets, _, exception_sockets = select.select(sockets_list, [], sockets_list)
-
 
     # Iterate over notified sockets
     for notified_socket in read_sockets:
