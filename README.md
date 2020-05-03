@@ -26,3 +26,6 @@ The project includes client to client secure message transmission and a secure g
  * Run client.py to create new users.
  
   
+<hr/>
+
+Feel free to contribute to the project :)
